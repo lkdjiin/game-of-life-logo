@@ -1,0 +1,105 @@
+load "generation.lg
+load "neighborhood.lg
+
+to t.create.generation.returns.a.list
+assert.list create.generation 4 3
+end
+
+to t.create.generation.have.a.height
+assert.equal 3 count create.generation 4 3
+end
+
+to t.create.generation.have.a.width
+assert.equal 4 count first create.generation 4 3
+end
+
+to t.create.generation.produces.0s.or.1s
+rerandom
+localmake "result create.generation 3 2
+assert.equal [[1 0 1] [1 1 1]] :result
+end
+
+to t.next.state.returns.alive.when.neighborhood.total.is.1
+localmake "result next.state [0 0 0 1 0 0 0 0 0]
+assert.equal 0 :result
+end
+
+to t.next.state.returns.alive.when.neighborhood.total.is.2
+localmake "result next.state [0 1 0 1 0 0 0 0 0]
+assert.equal 0 :result
+end
+
+to t.next.state.returns.alive.when.neighborhood.total.is.3
+localmake "result next.state [0 1 0 1 0 0 0 1 0]
+assert.equal 1 :result
+end
+
+to t.next.state.returns.alive.when.neighborhood.total.is.4.and.currently.alive
+localmake "result next.state [0 1 0 1 1 0 0 1 0]
+assert.equal 1 :result
+end
+
+to t.next.state.returns.dead.when.neighborhood.total.is.4.and.currently.dead
+localmake "result next.state [1 1 0 1 0 0 0 1 0]
+assert.equal 0 :result
+end
+
+to t.next.state.returns.dead.when.neighborhood.total.is.5
+localmake "result next.state [1 1 0 1 1 0 1 0 0]
+assert.equal 0 :result
+end
+
+to t.next.state.returns.dead.when.neighborhood.total.is.6
+localmake "result next.state [1 1 0 1 1 0 1 1 0]
+assert.equal 0 :result
+end
+
+to t.next.state.returns.dead.when.neighborhood.total.is.7
+localmake "result next.state [1 1 0 1 1 1 1 1 0]
+assert.equal 0 :result
+end
+
+to t.next.state.returns.dead.when.neighborhood.total.is.8
+localmake "result next.state [1 1 0 1 1 1 1 1 1]
+assert.equal 0 :result
+end
+
+to t.next.state.returns.dead.when.neighborhood.total.is.9
+localmake "result next.state [1 1 1 1 1 1 1 1 1]
+assert.equal 0 :result
+end
+
+to fixture.cells
+(output [ [ 0 1 0 1 ]
+          [ 1 0 1 0 ]
+          [ 0 1 1 0 ] ])
+end
+
+to t.extract.neighborhood.when.x.2.y.2
+localmake "result extract.neighborhood fixture.cells 2 2
+assert.equal [ 0 1 0 1 0 1 0 1 1 ] :result
+end
+
+to t.extract.neighborhood.when.x.2.y.1
+localmake "result extract.neighborhood fixture.cells 2 1
+assert.equal [ 0 0 0 0 1 0 1 0 1 ] :result
+end
+
+to t.extract.neighborhood.when.x.2.y.3
+localmake "result extract.neighborhood fixture.cells 2 3
+assert.equal [ 1 0 1 0 1 1 0 0 0 ] :result
+end
+
+to t.extract.neighborhood.when.x.1.y.2
+localmake "result extract.neighborhood fixture.cells 1 2
+assert.equal [ 0 0 1 0 1 0 0 0 1 ] :result
+end
+
+to t.extract.neighborhood.when.x.4.y.2
+localmake "result extract.neighborhood fixture.cells 4 2
+assert.equal [ 0 1 0 1 0 0 1 0 0 ] :result
+end
+
+to t.next.generation
+assert.equal [[0 1 1 0] [1 0 0 1] [0 1 1 0]] next.generation fixture.cells
+end

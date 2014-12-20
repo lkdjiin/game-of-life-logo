@@ -1,0 +1,25 @@
+hideturtle
+
+to draw.generation :generation :size
+clearscreen
+for [y 1 :size] [p.draw.line :y]
+end
+
+to p.draw.line :y
+for [x 1 :size] [if (cell.alive? :generation :x :y) [p.draw.cell :x :y ] ]
+end
+
+to p.draw.cell :x :y
+localmake "scale 4
+localmake "x.scaled :x * :scale
+localmake "y.scaled :y * :scale
+for [i 0 3] [p.draw.scaled.cell :i]
+end
+
+to p.draw.scaled.cell :delta
+penup
+setxy :x.scaled :y.scaled + :delta
+setheading 90
+pendown
+forward :scale
+end

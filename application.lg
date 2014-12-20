@@ -1,0 +1,13 @@
+load "generation.lg
+load "neighborhood.lg
+load "drawing.lg
+
+make "size 50
+
+make "gen create.generation :size :size
+draw.generation :gen :size
+
+(for [іteration 1 100] [
+  make "gen next.generation :gen
+  draw.generation :gen :size
+])

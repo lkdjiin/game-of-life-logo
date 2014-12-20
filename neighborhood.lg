@@ -1,0 +1,26 @@
+to next.state :neighborhood
+localmake "total reduce "sum :neighborhood
+output case :total [ [3 1] [4 item 5 :neighborhood] [else 0] ]
+end
+
+to extract.neighborhood :generation :x :y
+(output (list p.extract.ceil :x - 1 :y - 1
+              p.extract.ceil :x :y - 1
+              p.extract.ceil :x + 1 :y - 1
+              p.extract.ceil :x - 1 :y
+              p.extract.ceil :x :y
+              p.extract.ceil :x + 1 :y
+              p.extract.ceil :x - 1 :y + 1
+              p.extract.ceil :x :y + 1
+              p.extract.ceil :x + 1 :y + 1))
+end
+
+to p.extract.ceil :x :y
+if or (:x = 0) (:x = sum 1 count first :generation) [output 0]
+if or (:y = 0) (:y = sum 1 count :generation) [output 0]
+output item :x p.line :y
+end
+
+to p.line :index
+output item :index :generation
+end

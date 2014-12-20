@@ -1,0 +1,26 @@
+to create.generation :width :height
+output cascade :height [lput p.create.line ?] []
+end
+
+to p.create.line
+output cascade :width [lput (random 2) ?] []
+end
+
+to cell.alive? :generation :x :y
+localmake "line item :y :generation
+ifelse (item :x :line) = 1 [output "true] [output "false]
+end
+
+to next.generation :current
+localmake "next []
+localmake "width count first :current
+localmake "height count :current
+(for [j 1 :height] [
+  localmake "next.line []
+  (for [i 1 :width] [
+    make "next.line lput (next.state extract.neighborhood :current :i :j) :next.line
+  ])
+  make "next lput :next.line :next
+])
+output :next
+end
